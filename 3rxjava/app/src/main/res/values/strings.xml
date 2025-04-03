@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">rxjavaPractice</string>
+    <string name="load_data">1) сетевой запрос Загрузить данные</string>
+    <string name="result_tip">Результаты запросов</string>
+    <string name="timer">2) Таймер</string>
+    <string name="edit_text_log">4) EditText вывод в лог</string>
+    <string name="request_btn_text1">5) все равно выводим ответ</string>
+    <string name="request_btn_text2">5) ничего не выводить</string>
 </resources>
