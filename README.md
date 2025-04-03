@@ -20,3 +20,9 @@
 ## 3. throttleLatest
 ![image](https://github.com/user-attachments/assets/4e311b53-a1fc-44d9-8fb5-7db6daf7d531)\
 При вызове метода на тестовых данных должно выести:  1, 3, 4, 5, 6, 7
+
+# 3. Задача по теме RxJava
+Все задания Задач (2) уместились на одном экране\
+Задание 1 Задач (1) код также на Activity\
+![image](https://github.com/user-attachments/assets/ad8539f6-c4d1-4d82-a9d6-5bcd0b2e65b0)\
+Задание 2 Задач (1) в отдельной папке 
