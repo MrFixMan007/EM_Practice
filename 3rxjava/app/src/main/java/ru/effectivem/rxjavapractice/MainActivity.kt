@@ -9,10 +9,15 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.jakewharton.rxbinding2.widget.RxTextView
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Completable
+import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.ReplaySubject
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -52,6 +57,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun init() {
         disposeBag = CompositeDisposable()
+        val sub = CompositeDisposable()
     }
 
     private fun initApi() {
@@ -215,6 +221,14 @@ class MainActivity : AppCompatActivity() {
             }
             // повлиял на doOnSubscribe
             .subscribeOn(Schedulers.computation())
+            .retryUntil {
+                true
+            }
+            .retryWhen { err ->
+                if (err.take(1) == null) Completable.create {
+                    it.onComplete()
+                }.toObservable<Int>() else Maybe.just(0).toObservable()
+            }
             // Переключает поток для всех следующих операторов на RxSingleScheduler-1.
             .observeOn(Schedulers.single())
             .flatMap {
@@ -230,5 +244,142 @@ class MainActivity : AppCompatActivity() {
                 Log.d("HAHAHA", "subscribeThread = ${Thread.currentThread().name}")
             }
         )
+
+        val a = Flowable.create(
+            {
+                it.onNext(5)
+            },
+            BackpressureStrategy.BUFFER
+        )
+
+        disposeBag.add(
+            Observable.just(10, 20, 30)
+                .onErrorResumeNext { e: Throwable ->
+                    Observable.just(10, 20, 30)
+                }
+                .subscribe { println("✅ Item: $it") }
+        )
+
+        val obs = create()
+
+        val publish = obs.concatMap {
+            Observable.just(it)
+        }.publish().refCount()
+
+        publish.subscribe {
+            println("11 $it")
+        }
+
+
+        publish.subscribe {
+            println("22 $it")
+        }
+//
+        // Создание PublishSubject
+//        val publishSubject = PublishSubject.create<Int>()
+//
+//        // Подписка на PublishSubject
+//        val disposable = publishSubject.subscribe(
+//            // onNext - обработка нового значения
+//            { value -> println("Получено значение: $value") },
+//            // onError - обработка ошибки
+//            { error -> println("Ошибка: ${error.message}") },
+//            // onComplete - обработка завершения последовательности
+//            { println("Последовательность завершена") }
+//        )
+//
+//        val singlke = Maybe.create<Int> {
+//            it.onSuccess(5)
+//            it.onComplete()
+//        }
+//
+//        // Эмитирование событий
+//        publishSubject.onNext(1)
+//        publishSubject.onNext(2)
+//        publishSubject.onNext(3)
+//
+//        // Завершение последовательности
+//        publishSubject.onComplete()
+//
+//        // Отписка от PublishSubject
+//        disposable.dispose()
+//
+//
+//        val userInput = Observable.just(
+//            "100", "150", "200",
+//            "300", "400", "500"
+//        )
+//            .timestamp()
+//            .concatMap {
+//                Observable.just(it).delay(it.value().toLong(), TimeUnit.MILLISECONDS)
+//            } // эмуляция "ввода"
+
+//        disposeBag.add(
+//
+//            userInput
+//                .switchMap { query -> fakeApiCall("${query.value()} ${query.time()}") }
+//                // отменяет предыдущий запрос при новом вводе
+//                .subscribe { result -> println("Search result: $result") }
+//
+//        )
+//
+//        Flowable.create()
+
+        val flo = ReplaySubject.createWithTimeAndSize<Int>( )
+
+        val flowable = Observable.interval(1, TimeUnit.SECONDS)
+            .replay()
     }
+}
+
+fun fakeApiCall(query: String): Observable<String> {
+    return Observable.just("Results for: $query")
+        .subscribeOn(Schedulers.)
+        .delay(200, TimeUnit.MILLISECONDS) // запрос как будто идёт 1 секунду
+}
+
+fun main() {
+
+    val bag = CompositeDisposable()
+
+    bag.addAll(
+
+        Observable.interval(1000, TimeUnit.MILLISECONDS).map { it.toInt() }.subscribe {
+            println("1 $it")
+        },
+
+        create().subscribe({
+            println(it)
+        },
+            {
+
+            },
+            {
+
+            }
+        )
+
+    )
+
+}
+
+fun create(): Observable<Int> = Observable.create { emitter ->
+    with(emitter) {
+        repeat(10) {
+            onNext(it)
+        }
+        onComplete()
+    }
+}
+
+
+fun create1() = Observable.timer(2000, TimeUnit.MILLISECONDS).map { it.toInt() }.forEach {
+    println("1 $it")
+}
+
+fun flowable(): Flowable<Int> = create().toFlowable(BackpressureStrategy.BUFFER)
+
+
+fun create2() = Observable.defer {
+    Observable.just(5)
 }
