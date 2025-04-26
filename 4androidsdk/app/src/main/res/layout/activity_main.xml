@@ -7,13 +7,40 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp" />
+
+    <Button
+        android:id="@+id/back_btn"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="@string/previous"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/spacer"
+        app:layout_constraintStart_toStartOf="@+id/fragment_container_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container_view" />
+
+    <Space
+        android:id="@+id/spacer"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/fragment_container_view"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container_view" />
+
+    <Button
+        android:id="@+id/next_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_container_view"
+        app:layout_constraintStart_toEndOf="@id/spacer"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container_view" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

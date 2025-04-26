@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">4androidsdk</string>
+    <string name="first_fragment_text">first fragment</string>
+    <string name="second_fragment_text">second fragment</string>
+    <string name="third_fragment_text">third fragment</string>
+    <string name="previous">Предыдущая</string>
+    <string name="next">Следующая</string>
 </resources>
