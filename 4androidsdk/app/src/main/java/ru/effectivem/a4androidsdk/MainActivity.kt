@@ -1,16 +1,21 @@
 package ru.effectivem.a4androidsdk
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.work.Constraints
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import ru.effectivem.a4androidsdk.databinding.ActivityMainBinding
 import ru.effectivem.a4androidsdk.z1Fragments.MyNavigationRouter
 import ru.effectivem.a4androidsdk.z1Fragments.NavigationRouter
 import ru.effectivem.a4androidsdk.z1Fragments.fragments.FirstFragment
 import ru.effectivem.a4androidsdk.z1Fragments.fragments.SecondFragment
 import ru.effectivem.a4androidsdk.z1Fragments.fragments.ThirdFragment
+import ru.effectivem.a4androidsdk.z2workManager.MyBatteryWorkManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         setupRouter(savedInstanceState?.getInt(fragmentPosition))
         initUI()
+        setupWorker(this)
     }
 
     private fun setupRouter(startFragmentPosition: Int?) {
@@ -65,5 +71,18 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         if (router.currentPosition != 0) outState.putInt(fragmentPosition, router.currentPosition)
+    }
+
+    private fun setupWorker(context: Context) {
+        val constraints = Constraints.Builder()
+            .setRequiresCharging(true)
+            .build()
+
+        val request = OneTimeWorkRequestBuilder<MyBatteryWorkManager>()
+            .setConstraints(constraints)
+            .build()
+
+        WorkManager.getInstance(context).enqueue(request)
+
     }
 }
