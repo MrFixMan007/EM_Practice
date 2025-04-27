@@ -7,4 +7,5 @@
     <string name="next">Следующая</string>
     <string name="charge_title">Зарядка</string>
     <string name="charge_message_charging">Устройство подключено к зарядке!</string>
+    <string name="open_chat">Открыть чат (пока не робит)</string>
 </resources>

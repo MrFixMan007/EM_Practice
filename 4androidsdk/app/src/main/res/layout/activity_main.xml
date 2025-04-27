@@ -10,21 +10,23 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="80dp" />
+        android:layout_height="320dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/back_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/previous"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/spacer"
+        app:layout_constraintBottom_toTopOf="@+id/to_chat_btn"
+        app:layout_constraintEnd_toStartOf="@+id/btn_spacer"
         app:layout_constraintStart_toStartOf="@+id/fragment_container_view"
         app:layout_constraintTop_toBottomOf="@+id/fragment_container_view" />
 
     <Space
-        android:id="@+id/spacer"
+        android:id="@+id/btn_spacer"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,10 +39,51 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/next"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/back_btn"
         app:layout_constraintEnd_toEndOf="@+id/fragment_container_view"
-        app:layout_constraintStart_toEndOf="@id/spacer"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_container_view" />
+        app:layout_constraintStart_toEndOf="@id/btn_spacer"
+        app:layout_constraintTop_toTopOf="@+id/back_btn" />
+
+    <Button
+        android:id="@+id/to_chat_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/open_chat"
+        app:layout_constraintBottom_toBottomOf="@+id/my_simple_custom_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_btn" />
+
+    <ru.effectivem.a4androidsdk.z3customView.SimpleProgressRectangle
+        android:id="@+id/my_simple_custom_view"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        app:background_color="@color/white"
+        app:fill_color="#971414"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/view_spacer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/to_chat_btn"
+        app:one_step_value="25" />
+
+    <Space
+        android:id="@+id/view_spacer"
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/my_random_custom_view"
+        app:layout_constraintStart_toEndOf="@+id/my_simple_custom_view"
+        app:layout_constraintTop_toBottomOf="@+id/to_chat_btn" />
+
+    <ru.effectivem.a4androidsdk.z3customView.RandomProgressRectangle
+        android:id="@+id/my_random_custom_view"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        app:background_color="#971414"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view_spacer"
+        app:layout_constraintTop_toBottomOf="@+id/to_chat_btn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

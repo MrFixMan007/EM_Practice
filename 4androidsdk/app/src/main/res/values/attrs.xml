@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="background_color" format="color" />
+    <attr name="fill_color" format="color" />
+    <attr name="one_step_value" format="integer" />
+
+    <declare-styleable name="SimpleProgressRectangle">
+        <attr name="background_color" />
+        <attr name="fill_color" />
+        <attr name="one_step_value" />
+    </declare-styleable>
+
+    <declare-styleable name="RandomProgressRectangle">
+        <attr name="background_color" />
+        <attr name="one_step_value" />
+    </declare-styleable>
+</resources>
