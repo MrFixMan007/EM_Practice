@@ -2,6 +2,8 @@ package ru.effectivem.a4androidsdk
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
+import android.view.ViewTreeObserver
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,6 +18,7 @@ import ru.effectivem.a4androidsdk.z1Fragments.fragments.FirstFragment
 import ru.effectivem.a4androidsdk.z1Fragments.fragments.SecondFragment
 import ru.effectivem.a4androidsdk.z1Fragments.fragments.ThirdFragment
 import ru.effectivem.a4androidsdk.z2workManager.MyBatteryWorkManager
+import ru.effectivem.a4androidsdk.z4chat.ui.ChatFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         setupRouter(savedInstanceState?.getInt(fragmentPosition))
-        initUI()
+        initUI(savedInstanceState)
         setupWorker(this)
     }
 
@@ -57,13 +60,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initUI() {
+    private fun initUI(savedInstanceState: Bundle?) {
         with(binding) {
             backBtn.setOnClickListener {
                 router.openPrevious()
             }
             nextBtn.setOnClickListener {
                 router.openNext()
+            }
+            toChatBtn.setOnClickListener {
+                router.replace(ChatFragment())
+            }
+
+            if (savedInstanceState == null) {
+                toChatBtn.viewTreeObserver.addOnGlobalLayoutListener(
+                    object : ViewTreeObserver.OnGlobalLayoutListener {
+                        override fun onGlobalLayout() {
+                            toChatBtn.viewTreeObserver.removeOnGlobalLayoutListener(this)
+
+                            toChatBtn.visibility = View.VISIBLE
+                            toChatBtn.alpha = 0f
+                            toChatBtn.animate()
+                                .alpha(1f)
+                                .setDuration(1000)
+                                .start()
+                        }
+                    }
+                )
             }
         }
     }

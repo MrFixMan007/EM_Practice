@@ -19,6 +19,13 @@ class MyNavigationRouter(
         replace(_currentPosition)
     }
 
+    override fun replace(fragment: Fragment) {
+        fragmentManager.beginTransaction()
+            .replace(containerViewId, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
     override fun openNext() {
         _currentPosition = if (_currentPosition < fragments.size - 1) _currentPosition + 1 else 0
         replace(_currentPosition)
@@ -31,9 +38,6 @@ class MyNavigationRouter(
 
     private fun replace(position: Int) {
         if (position > fragments.size - 1) throw IllegalArgumentException("index must be < fragments size, but fragments size = ${fragments.size} and index = $position")
-        fragmentManager.beginTransaction()
-            .replace(containerViewId, fragments[position])
-            .addToBackStack(null)
-            .commit()
+        replace(fragments[position])
     }
 }
