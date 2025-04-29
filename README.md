@@ -26,3 +26,8 @@
 Задание 1 Задач (1) код также на Activity\
 ![image](https://github.com/user-attachments/assets/ad8539f6-c4d1-4d82-a9d6-5bcd0b2e65b0)\
 Задание 2 Задач (1) в отдельной папке 
+
+# 3. Задача по теме Android SDK
+Каждое задание поделено по пакетам\
+Задание 4. Структура чата\
+![Структура чата](https://github.com/user-attachments/assets/9c0996c7-df05-4775-9ac1-deaca33fed1e)
