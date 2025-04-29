@@ -4,7 +4,7 @@ import ru.effectivem.a4androidsdk.z4chat.ui.model.ChatTitle
 
 internal fun getChatTitleList() = listOf(
     ChatTitle(
-        id = "0",
+        id = "101",
         title = "Niko",
         lastMessage = "Привет"
     ),
@@ -66,15 +66,51 @@ internal fun getChatTitleList() = listOf(
         title = "Маша",
         lastMessage = "Давно заходил?"
     ),
+    )
+
+internal fun getNewChatTitleList() = listOf(
     ChatTitle(
+        id = "101",
+        title = "Nikolai",
+        lastMessage = "Привет"
+    ),
+    ChatTitle(
+        id = "1",
+        title = "Маша ка",
+        lastMessage = "Давно заходил?"
+    ),
+    ChatTitle(
+        id = "2",
+        title = "Антон ка",
+        lastMessage = "Как дела?"
+    ),
+    ChatTitle(
+        id = "3",
+        title = "Катя",
+        lastMessage = "хахахвапвапвпавпа"
+    ),
+    ChatTitle(
+        id = "4",
+        title = "Медведь иха",
+        lastMessage = "Ты кто?"
+    ),
+    ChatTitle(
+        id = "5",
+        title = "Маша",
+        lastMessage = "Давно заходил?"
+    ),
+    ChatTitle(
+        id = "6",
         title = "Антон",
         lastMessage = "Как дела?"
     ),
     ChatTitle(
-        title = "Катя",
+        id = "7",
+        title = "Катя хка",
         lastMessage = "хахах"
     ),
     ChatTitle(
+        id = "10",
         title = "Niko",
         lastMessage = "Привет"
     ),
@@ -84,10 +120,30 @@ internal fun getChatTitleList() = listOf(
     ),
     ChatTitle(
         title = "Маша",
-        lastMessage = "Давно заходил?"
+        lastMessage = "Давно заходил?  впвап вап "
     ),
     ChatTitle(
         title = "Антон",
+        lastMessage = "Как дела?"
+    ),
+    ChatTitle(
+        title = "Катя",
+        lastMessage = "хахах в п авв па"
+    ),
+    ChatTitle(
+        title = "Niko",
+        lastMessage = "Привет"
+    ),
+    ChatTitle(
+        title = "Медведь дад",
+        lastMessage = "Ты кто?"
+    ),
+    ChatTitle(
+        title = "Маша",
+        lastMessage = "Давно заходил?"
+    ),
+    ChatTitle(
+        title = "Антон ват",
         lastMessage = "Как дела?"
     ),
     ChatTitle(
@@ -96,4 +152,3 @@ internal fun getChatTitleList() = listOf(
     ),
 
     )
-

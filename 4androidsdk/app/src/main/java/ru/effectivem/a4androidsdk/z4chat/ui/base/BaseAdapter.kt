@@ -16,7 +16,7 @@ abstract class BaseAdapter<P> : RecyclerView.Adapter<BaseViewHolder<P>>() {
         this.mCallback = null
     }
 
-    fun setList(dataList: List<P>) {
+    open fun setList(dataList: List<P>) {
         mDataList.addAll(dataList)
         hasItems = true
         notifyDataSetChanged()

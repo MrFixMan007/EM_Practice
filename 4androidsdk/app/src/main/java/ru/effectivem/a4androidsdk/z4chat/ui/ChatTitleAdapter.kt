@@ -3,6 +3,7 @@ package ru.effectivem.a4androidsdk.z4chat.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import ru.effectivem.a4androidsdk.R
 import ru.effectivem.a4androidsdk.databinding.ChatTitleItemBinding
 import ru.effectivem.a4androidsdk.z4chat.ui.base.BaseAdapter
@@ -15,6 +16,19 @@ class ChatTitleAdapter : BaseAdapter<ChatTitle>() {
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.chat_title_item, parent, false)
         )
+    }
+
+    override fun setList(dataList: List<ChatTitle>) {
+        val newList = mutableListOf<ChatTitle>().apply {
+            addAll(dataList)
+        }
+
+        val diffCallback = ChatDiffUtilCallback(mDataList, newList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        mDataList = newList.toMutableList()
+        hasItems = newList.isNotEmpty()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     class ViewHolder(itemView: View) :

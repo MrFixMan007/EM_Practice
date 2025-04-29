@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.effectivem.a4androidsdk.databinding.ChatFragmentBinding
 
+
 class ChatFragment : Fragment() {
     private val chatTitleAdapter = ChatTitleAdapter()
 
@@ -32,6 +33,9 @@ class ChatFragment : Fragment() {
             recyclerView.adapter = chatTitleAdapter
 
             chatTitleAdapter.setList(getChatTitleList())
+            btn.setOnClickListener {
+                chatTitleAdapter.setList(getNewChatTitleList())
+            }
         }
     }
 
