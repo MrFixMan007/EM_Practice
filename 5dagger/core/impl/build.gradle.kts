@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.effectivem.home"
+    namespace = "ru.effectivem.impl"
     compileSdk = 35
 
     defaultConfig {

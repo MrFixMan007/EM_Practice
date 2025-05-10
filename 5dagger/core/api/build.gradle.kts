@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.effectivem.home"
+    namespace = "ru.effectivem.api"
     compileSdk = 35
 
     defaultConfig {
@@ -44,6 +44,4 @@ dependencies {
 
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
-
-    implementation(project(":core:api"))
 }

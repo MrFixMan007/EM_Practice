@@ -21,6 +21,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "5dagger"
 include(":app")
-include(":core")
-include(":features")
+
+include(":core:api")
+include(":core:impl")
+
 include(":features:home")

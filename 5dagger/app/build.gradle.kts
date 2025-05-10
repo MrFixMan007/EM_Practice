@@ -47,7 +47,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(project(":core"))
+    implementation(project(":core:api"))
+    implementation(project(":core:impl"))
     implementation(project(":features:home"))
 
     implementation(libs.dagger)
