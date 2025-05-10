@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    kotlin("kapt")
 }
 
 android {
@@ -48,4 +49,7 @@ dependencies {
 
     implementation(project(":core"))
     implementation(project(":features:home"))
+
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
 }
