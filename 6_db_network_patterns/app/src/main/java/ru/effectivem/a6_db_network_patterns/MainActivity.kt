@@ -16,6 +16,13 @@ import ru.effectivem.a6_db_network_patterns.z1.data.FlowerShopRepository
 import ru.effectivem.a6_db_network_patterns.z1.db.FlowerShopDatabase
 import ru.effectivem.a6_db_network_patterns.z3.data.api.ApiService
 import ru.effectivem.a6_db_network_patterns.z3.data.api.ResponseLogInterceptor
+import ru.effectivem.a6_db_network_patterns.z4.CarBuilder
+import ru.effectivem.a6_db_network_patterns.z4.factory.ToyotaFactory
+import ru.effectivem.a6_db_network_patterns.z4.model.CarType
+import ru.effectivem.a6_db_network_patterns.z4.model.GasTank
+import ru.effectivem.a6_db_network_patterns.z4.model.Seat
+import ru.effectivem.a6_db_network_patterns.z4.model.SeatType
+import ru.effectivem.a6_db_network_patterns.z4.model.Transmission
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         init()
         initApi()
         initUI()
+        initCar()
     }
 
     private fun init() {
@@ -94,13 +102,34 @@ class MainActivity : AppCompatActivity() {
         apiService = retrofit.create(ApiService::class.java)
 
         lifecycleScope.launch(Dispatchers.IO) {
-            Log.d(
-                "api service",
-                apiService.getPost().body()
-                    .toString()
-                    .replace(", ", ",\n\t")
-                    .replaceFirst("(", "\n(\n\t")
-            )
+            runCatching {
+                Log.d(
+                    "api service",
+                    apiService.getPost().body()
+                        .toString()
+                        .replace(", ", ",\n\t")
+                        .replaceFirst("(", "\n(\n\t")
+                )
+            }.onFailure {
+                Log.e("apiService", "$it")
+            }
         }
+    }
+
+    private fun initCar() {
+        val car = CarBuilder()
+            .setCarType(type = CarType.SPORTS_CAR)
+            .setGasTank(GasTank(100))
+            .setTransmission(Transmission.SEMI_AUTOMATIC)
+            .setSeats(listOf(Seat(SeatType.SPORT)))
+            .build()
+        car.gasTank.fill(50)
+        car.engine.addMileage(10)
+        car.gasTank.drain(15)
+        Log.d("car", "$car")
+
+        val toyotaFactory = ToyotaFactory()
+        val toyotaSportCar = toyotaFactory.createSportCar()
+        Log.d("car", "$toyotaSportCar")
     }
 }
