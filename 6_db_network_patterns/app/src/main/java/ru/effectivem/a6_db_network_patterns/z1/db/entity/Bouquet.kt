@@ -9,4 +9,5 @@ data class Bouquet(
     @PrimaryKey(autoGenerate = true) val bouquetId: Long,
     @ColumnInfo(name = "bouquetName", collate = ColumnInfo.NOCASE) val bouquetName: String,
     @ColumnInfo(name = "bouquetPrice") val price: Int,
+    @ColumnInfo(name = "decoration") val decoration: String,
 )

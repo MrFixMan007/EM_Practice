@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.room.Room
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.effectivem.a6_db_network_patterns.z1.data.FlowerShopRepository
@@ -24,34 +23,42 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        this.deleteDatabase("flower-shop-db")
-
-        val db = Room.databaseBuilder(
-            this.applicationContext,
-            FlowerShopDatabase::class.java,
-            "flower-shop-db"
-        )
-            .build()
+        val db = FlowerShopDatabase.getDatabase(this)
 
         repository = FlowerShopRepository(db = db)
 
         lifecycleScope.launch(Dispatchers.IO) {
             repository.init()
-            Log.d("db created ", "кол-во букетов ${repository.getBouquetsCount()}")
-            Log.d("db created ", "кол-во цветов ${repository.getFlowersCount()}")
-            val bouquetsWithFlowers = repository.getBouquetsWithFlowers()
-            Log.d("db bouquets With Flowers", "$bouquetsWithFlowers")
-            val bouquetIds = repository.getAllBouquets()
-            bouquetIds.forEach { bouquet ->
-                Log.d("db created ", "букет ${bouquet.bouquetName} был куплен за ${bouquet.price} рублей")
-                repository.buyBouquet(bouquet.bouquetId)
-            }
+
+            //покупка всех букетов
             Log.d("db created ", "кол-во букетов ${repository.getBouquetsCount()}")
             Log.d("db created ", "кол-во цветов ${repository.getFlowersCount()}")
 
-            Log.d("db bouquets With Flowers", if (repository.getBouquetsWithFlowers().isEmpty()) "Все цветы раскуплены" else "цветы ещё остались")
-            val newBouquetsWithFlowers = repository.getBouquetsWithFlowers()
-            Log.d("db bouquets With Flowers", "$newBouquetsWithFlowers")
+            val bouquetsWithFlowers = repository.getBouquetsWithFlowers()
+            Log.d("db bouquets With Flowers", "$bouquetsWithFlowers")
+
+//            Закоментировал для просмотра таблиц в инспекции
+
+//            val bouquetIds = repository.getAllBouquets()
+//            bouquetIds.forEach { bouquet ->
+//                Log.d(
+//                    "db created ",
+//                    "букет ${bouquet.bouquetName} был куплен за ${bouquet.price} рублей"
+//                )
+//                repository.buyBouquet(bouquet.bouquetId)
+//            }
+//            Log.d("db created ", "кол-во букетов ${repository.getBouquetsCount()}")
+//            Log.d("db created ", "кол-во цветов ${repository.getFlowersCount()}")
+//
+
+//            Log.d(
+//                "db bouquets With Flowers",
+//                if (repository.getBouquetsWithFlowers()
+//                        .isEmpty()
+//                ) "Все цветы раскуплены" else "цветы ещё остались"
+//            )
+//            val newBouquetsWithFlowers = repository.getBouquetsWithFlowers()
+//            Log.d("db bouquets With Flowers", "$newBouquetsWithFlowers")
         }
 
     }
