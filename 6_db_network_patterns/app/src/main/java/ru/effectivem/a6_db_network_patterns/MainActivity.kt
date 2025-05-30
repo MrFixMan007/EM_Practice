@@ -9,16 +9,23 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import ru.effectivem.a6_db_network_patterns.z1.data.FlowerShopRepository
 import ru.effectivem.a6_db_network_patterns.z1.db.FlowerShopDatabase
+import ru.effectivem.a6_db_network_patterns.z3.data.api.ApiService
+import ru.effectivem.a6_db_network_patterns.z3.data.api.ResponseLogInterceptor
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var repository: FlowerShopRepository
+    private lateinit var apiService: ApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
+        initApi()
         initUI()
     }
 
@@ -70,6 +77,30 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+    }
+
+    private fun initApi() {
+        val client = OkHttpClient.Builder()
+            .addInterceptor(ResponseLogInterceptor())
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://jsonplaceholder.typicode.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+
+        apiService = retrofit.create(ApiService::class.java)
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            Log.d(
+                "api service",
+                apiService.getPost().body()
+                    .toString()
+                    .replace(", ", ",\n\t")
+                    .replaceFirst("(", "\n(\n\t")
+            )
         }
     }
 }
